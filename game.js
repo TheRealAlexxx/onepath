@@ -2,19 +2,20 @@
 (function () {
   const $ = (id) => document.getElementById(id);
   const store = { get() { try { return JSON.parse(localStorage.getItem('onepath') || '{}'); } catch (e) { return {}; } }, set(v) { try { localStorage.setItem('onepath', JSON.stringify(v)); } catch (e) { /* private mode */ } } };
-  let levels = [], idx = 0, L = null, path = [], drawing = false, won = false;
+  let levels = [], idx = 0, L = null, path = [], drawing = false, won = false, daily = false;
 
   fetch('levels.json').then((r) => r.json()).then((d) => {
     levels = d;
-    d.forEach((l, i) => { const b = document.createElement('button'); b.textContent = l.id; b.onclick = () => load(i); $('levels').appendChild(b); });
-    const h = parseInt(location.hash.slice(1), 10);
+    d.forEach((l, i) => { const b = document.createElement('button'); b.textContent = l.id; b.onclick = () => { daily = false; load(i); }; $('levels').appendChild(b); });
+    daily = location.hash === '#daily';
+    const h = daily ? Daily.dailyIndex(new Date(), d.length) + 1 : parseInt(location.hash.slice(1), 10);
     load(h > 0 && h <= d.length ? h - 1 : Math.min(store.get().cur || 0, d.length - 1));
   });
 
   function load(i) {
     idx = i; L = Core.parse(levels[i]); path = []; won = false;
     const s = store.get(); s.cur = i; store.set(s);
-    history.replaceState(null, '', '#' + (i + 1));
+    history.replaceState(null, '', daily ? '#daily' : '#' + (i + 1)); $('share').hidden = true;
     const b = $('board');
     b.innerHTML = '';
     b.style.gridTemplateColumns = 'repeat(' + L.w + ', 1fr)';
@@ -76,6 +77,7 @@
     won = true;
     const s = store.get(); s.best = s.best || {}; s.best[idx] = 1; store.set(s);
     say('Filled. That was the only solution.', 'win');
+    $('share').hidden = !daily;
     list();
   }
 
@@ -105,7 +107,12 @@
   $('board').addEventListener('pointerdown', (e) => { drawing = true; tryExtend(cellFromEvent(e)); e.preventDefault(); });
   window.addEventListener('pointermove', (e) => { if (drawing && !won) tryExtend(cellFromEvent(e)); });
   window.addEventListener('pointerup', () => { drawing = false; });
+  $('daily').onclick = () => { daily = true; load(Daily.dailyIndex(new Date(), levels.length)); };
+  $('share').onclick = () => {
+    const text = Daily.shareText(new Date(), L.freeCount, 'https://therealalexxx.github.io/onepath/#daily');
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => say('Copied: ' + text.split('\n')[0], 'win'), () => say(text, 'win'));
+  };
   $('reset').onclick = () => { path = []; won = false; say(''); draw(); };
-  $('prev').onclick = () => idx > 0 && load(idx - 1);
-  $('next').onclick = () => idx + 1 < levels.length && load(idx + 1);
+  $('prev').onclick = () => idx > 0 && (daily = false, load(idx - 1));
+  $('next').onclick = () => idx + 1 < levels.length && (daily = false, load(idx + 1));
 })();
