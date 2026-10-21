@@ -4,6 +4,8 @@ Fill every tile in one stroke, hitting the numbered checkpoints in order.
 
 **Play:** https://therealalexxx.github.io/onepath/
 
+Open https://therealalexxx.github.io/onepath/#daily for the level of the day (same for everyone per UTC date). Finishing it offers a copy-able result line.
+
 Drag from S across the grid without lifting or crossing yourself. Numbered
 tiles are checkpoints: pass 1 before 2, 2 before 3. Drag back over your last
 tile to undo a step. Every level has exactly one solution, proven by search.
