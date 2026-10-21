@@ -48,9 +48,12 @@ test('solver counts match plain enumeration on small grids', () => {
 
 test('validate accepts the stored solution and rejects cheaters', () => {
   const L = C.parse({ grid: ['S.1', '...'] });
-  assert.deepStrictEqual(C.validate(L, [0, 1, 3, 4, 5, 2]).done, true);
-  assert.ok(C.validate(L, [0, 1, 2]).error);           // 1 not reached, path fine but unfinished
-  assert.strictEqual(C.validate(L, [0, 1, 2]).done, false);
+  assert.deepStrictEqual(C.validate(L, [0, 3, 4, 1, 2, 5]).done, true);
+  assert.strictEqual(C.validate(L, [0, 3, 4]).done, false); // unfinished is not an error
+  assert.strictEqual(C.validate(L, [0, 3, 4]).error, null);
+  const L2 = C.parse({ grid: ['S21', '...'] });
+  assert.ok(C.validate(L2, [0, 1]).error);             // hit 2 before 1
+  assert.strictEqual(C.validate(L2, [0, 3, 4, 5, 2, 1]).done, true);
   assert.ok(C.validate(L, [0, 2]).error);              // skips a cell
   assert.ok(C.validate(L, [0, 1, 3, 4, 1]).error);     // revisit
   assert.ok(C.validate(L, [3, 2, 1, 0]).error);        // wrong start
