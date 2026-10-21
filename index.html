@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>onepath - fill the grid in one stroke</title>
+<meta name="description" content="Fill every tile in one stroke, hitting the numbered checkpoints in order. Every level has exactly one solution, proven by search.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>onepath</h1>
+  <p class="tagline">one stroke, every tile, checkpoints in order</p>
+  <section id="hud"><span id="lvl"></span><span id="info"></span></section>
+  <div id="board"></div>
+  <p id="msg"></p>
+  <div class="row">
+    <button id="reset" class="secondary">restart</button>
+    <button id="prev" class="secondary">prev</button>
+    <button id="next" class="secondary">next</button>
+  </div>
+  <details><summary>how to play</summary>
+    <p>Drag from S and fill every open tile in one stroke without lifting or crossing yourself. Numbered tiles are checkpoints: you must pass 1 before 2, 2 before 3, and so on. Drag back over your last tile to undo a step. Every level has exactly one solution, proven by search.</p>
+  </details>
+  <h2>levels</h2>
+  <div id="levels"></div>
+  <footer><a href="https://github.com/TheRealAlexxx/onepath">source</a> - MIT</footer>
+</main>
+<script src="core.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

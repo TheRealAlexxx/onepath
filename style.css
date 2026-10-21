@@ -1,0 +1,21 @@
+:root{--bg:#0f1410;--panel:#18211a;--border:#2c3a2e;--text:#e9f0e9;--dim:#8fa393;--acc:#8be04e;--cp:#ffd166;--good:#6fd38e;--bad:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 ui-monospace,Menlo,Consolas,monospace}
+main{max-width:540px;margin:0 auto;padding:1.2rem 1rem 3rem}h1{margin:0;color:var(--acc);letter-spacing:.08em}
+h2{font-size:1rem;color:var(--dim);text-transform:uppercase;margin-top:2rem}.tagline{margin:.1rem 0 1rem;color:var(--dim)}
+#hud{display:flex;justify-content:space-between;color:var(--dim);font-size:.9rem;margin-bottom:.4rem}
+#board{display:grid;gap:4px;width:100%;touch-action:none;user-select:none}
+.c{aspect-ratio:1;background:var(--panel);border:2px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:bold}
+.c.wall{background:transparent;border-color:transparent}
+.c.start{color:var(--acc);border-color:var(--acc)}
+.c.cp{color:var(--cp);border-color:var(--cp)}
+.c.cp.passed{color:var(--good);border-color:var(--good)}
+.c.on{background:#223318;border-color:var(--acc);color:var(--acc)}
+.c.head{background:var(--acc);color:#16220a}
+#msg{min-height:1.5rem;margin:.5rem 0;color:var(--dim)}#msg.win{color:var(--good)}#msg.bad{color:var(--bad)}
+button{font:inherit;background:var(--acc);color:#16220a;border:0;border-radius:6px;padding:.5rem .8rem;cursor:pointer}
+button.secondary{background:var(--panel);color:var(--text);border:1px solid var(--border)}
+.row{display:flex;gap:.5rem;flex-wrap:wrap}
+details{margin-top:1rem;color:var(--dim)}summary{color:var(--text);cursor:pointer}
+#levels{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px}#levels button{background:var(--panel);color:var(--text);border:1px solid var(--border);padding:.4rem 0;font-size:.85rem}
+#levels .cur{border-color:var(--acc)}#levels .done{border-color:var(--good);color:var(--good)}
+footer{margin-top:2rem;color:var(--dim);font-size:.85rem}footer a{color:var(--acc)}
